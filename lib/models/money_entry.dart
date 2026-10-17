@@ -1,0 +1,40 @@
+// หมายเหตุ: ไม่ตั้งชื่อ Transaction เพราะซ้ำกับคลาสใน sqflite
+class MoneyEntry {
+  final int? id;
+  final String title;
+  final double amount;
+  final bool isIncome;
+  final String category;
+  final DateTime date;
+
+  const MoneyEntry({
+    this.id,
+    required this.title,
+    required this.amount,
+    required this.isIncome,
+    required this.category,
+    required this.date,
+  });
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'title': title,
+      'amount': amount,
+      'isIncome': isIncome ? 1 : 0,
+      'category': category,
+      'date': date.toIso8601String(),
+    };
+  }
+
+  factory MoneyEntry.fromMap(Map<String, dynamic> map) {
+    return MoneyEntry(
+      id: map['id'] as int?,
+      title: map['title'] as String,
+      amount: (map['amount'] as num).toDouble(),
+      isIncome: (map['isIncome'] as int) == 1,
+      category: map['category'] as String,
+      date: DateTime.parse(map['date'] as String),
+    );
+  }
+}
